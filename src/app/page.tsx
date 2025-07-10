@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8">
-      <h1 className="text-4xl font-bold mb-4">Demo Wallet</h1>
+      <h1 className="text-4xl font-bold mb-4">sdk demo</h1>
       <p className="mb-8 text-center">Connect wallet using avail wallet sdk</p>
 
       <AvailWalletConnect>
