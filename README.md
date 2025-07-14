@@ -1,4 +1,4 @@
-# Avail Wallet Demo
+# Avail Connect Demo
 
 This is a simple Avail wallet interface built with **Next.js**, **avail-connect**, and **@polkadot/api**.
 
@@ -17,7 +17,7 @@ https://github.com/user-attachments/assets/df65baf9-5850-4c92-b62a-aa95bc65a2f8
 ## Getting Started
 
 ```bash
-git clone https://github.com/Dksie09/avail-wallet-sdk-demo.git
+git clone https://github.com/Dksie09/avail-connect-demo.git
 cd avail-wallet-sdk-demo
 npm install
 npm run dev

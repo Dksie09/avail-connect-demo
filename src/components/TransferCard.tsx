@@ -28,30 +28,31 @@ export default function TransferCard() {
     if (
       !selected ||
       !selectedWallet ||
+      !selectedWallet.signer ||
       !api ||
       !isReady ||
       !recipient ||
       !amount
     )
       return;
+
     try {
       setStatus("loading");
+
+      // Set signer once (required in new SDK)
+      api.setSigner(selectedWallet.signer);
 
       const plancks = new BN(BigInt(Number(amount) * 1e18).toString());
 
       const unsub = await api.tx.balances
         .transferKeepAlive(recipient, plancks)
-        .signAndSend(
-          selected.address,
-          { signer: selectedWallet.signer },
-          (result) => {
-            if (result.status.isInBlock || result.status.isFinalized) {
-              setStatus("success");
-              setTimeout(() => setStatus("idle"), 3000);
-              unsub();
-            }
+        .signAndSend(selected.address, (result) => {
+          if (result.status.isInBlock || result.status.isFinalized) {
+            setStatus("success");
+            setTimeout(() => setStatus("idle"), 3000);
+            unsub?.();
           }
-        );
+        });
     } catch (err) {
       console.error("Transaction failed:", err);
       setStatus("error");
