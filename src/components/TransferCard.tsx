@@ -1,7 +1,14 @@
 "use client";
-import { useApi, useAvailAccount } from "avail-wallet-sdk";
+import { useApi, useAvailAccount } from "avail-connect";
 import { useState } from "react";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Button } from "@/components/ui/button";
@@ -13,24 +20,38 @@ export default function TransferCard() {
 
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
 
   const handleSend = async () => {
-    if (!selected || !selectedWallet || !api || !isReady || !recipient || !amount) return;
+    if (
+      !selected ||
+      !selectedWallet ||
+      !api ||
+      !isReady ||
+      !recipient ||
+      !amount
+    )
+      return;
     try {
       setStatus("loading");
 
-      const plancks = new BN((BigInt(Number(amount) * 1e18)).toString());
+      const plancks = new BN(BigInt(Number(amount) * 1e18).toString());
 
       const unsub = await api.tx.balances
         .transferKeepAlive(recipient, plancks)
-        .signAndSend(selected.address, { signer: selectedWallet.signer }, (result) => {
-          if (result.status.isInBlock || result.status.isFinalized) {
-            setStatus("success");
-            setTimeout(() => setStatus("idle"), 3000);
-            unsub();
+        .signAndSend(
+          selected.address,
+          { signer: selectedWallet.signer },
+          (result) => {
+            if (result.status.isInBlock || result.status.isFinalized) {
+              setStatus("success");
+              setTimeout(() => setStatus("idle"), 3000);
+              unsub();
+            }
           }
-        });
+        );
     } catch (err) {
       console.error("Transaction failed:", err);
       setStatus("error");
@@ -49,12 +70,23 @@ export default function TransferCard() {
       <CardContent className="space-y-4">
         <div className="grid gap-2">
           <Label htmlFor="address">Recipient address</Label>
-          <Input id="address" value={recipient} onChange={(e) => setRecipient(e.target.value)} />
+          <Input
+            id="address"
+            value={recipient}
+            onChange={(e) => setRecipient(e.target.value)}
+          />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="amount">Amount</Label>
-          <Input id="amount" type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
-          <span className="text-xs text-muted-foreground">in AVAIL (1 AVAIL = 1e18 planck)</span>
+          <Input
+            id="amount"
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+          <span className="text-xs text-muted-foreground">
+            in AVAIL (1 AVAIL = 1e18 planck)
+          </span>
         </div>
       </CardContent>
       <CardFooter>
@@ -65,7 +97,11 @@ export default function TransferCard() {
             status === "success" ? "bg-green-500" : ""
           }`}
         >
-          {status === "loading" ? "Sending..." : status === "success" ? "✓ Sent" : "Send"}
+          {status === "loading"
+            ? "Sending..."
+            : status === "success"
+            ? "✓ Sent"
+            : "Send"}
         </Button>
       </CardFooter>
     </Card>

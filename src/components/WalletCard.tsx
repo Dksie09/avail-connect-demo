@@ -1,5 +1,5 @@
 "use client";
-import { useAvailAccount } from "avail-wallet-sdk";
+import { useAvailAccount } from "avail-connect";
 
 export default function WalletCard() {
   const { selected } = useAvailAccount();

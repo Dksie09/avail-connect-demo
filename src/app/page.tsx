@@ -2,7 +2,7 @@
 import WalletCard from "@/components/WalletCard";
 import BalanceDisplay from "@/components/BalanceDisplay";
 import TransferCard from "@/components/TransferCard";
-import { AvailWalletConnect, useAvailAccount } from "avail-wallet-sdk";
+import { AvailWalletConnect, useAvailAccount } from "avail-connect";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {

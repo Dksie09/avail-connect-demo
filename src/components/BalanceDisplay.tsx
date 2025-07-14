@@ -1,5 +1,5 @@
 "use client";
-import { useApi, useAvailAccount } from "avail-wallet-sdk";
+import { useApi, useAvailAccount } from "avail-connect";
 import { useEffect, useState } from "react";
 
 export default function BalanceDisplay() {
@@ -12,13 +12,13 @@ export default function BalanceDisplay() {
     if (isReady && api && selected?.address) {
       try {
         const result = await api.query.system.account(selected.address);
-const accountData = result.toJSON() as {
-  data: {
-    free: string;
-  };
-};
+        const accountData = result.toJSON() as {
+          data: {
+            free: string;
+          };
+        };
 
-const avails = Number(accountData.data.free) / 1e18;
+        const avails = Number(accountData.data.free) / 1e18;
 
         setBalance(avails.toFixed(6));
       } catch (err) {
