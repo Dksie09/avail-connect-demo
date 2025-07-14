@@ -16,6 +16,36 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Avail Connect Demo",
   description: "Demo app for avail-connect sdk",
+  metadataBase: new URL("https://avail-connect-sdk-demo.vercel.app"),
+  openGraph: {
+    title: "Avail Connect Demo",
+    description:
+      "A modern demo showcasing Avail blockchain wallet integration using avail-connect SDK.",
+    url: "https://avail-connect-sdk-demo.vercel.app", // change this
+    siteName: "Avail Connect Demo",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Avail Connect Wallet Demo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Avail Connect Demo",
+    description:
+      "A modern demo showcasing Avail blockchain wallet integration using avail-connect SDK.",
+    images: ["/og.png"],
+    creator: "@AvailProject",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
